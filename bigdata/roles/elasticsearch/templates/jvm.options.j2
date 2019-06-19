@@ -5,13 +5,13 @@
 ################################################################
 ##
 ## You should always set the min and max JVM heap
-## size to the same value. For example, to set
+## size to the same value_ For example, to set
 ## the heap to 4 GB, set:
 ##
 ## -Xms4g
 ## -Xmx4g
 ##
-## See https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+## See https://www_elastic_co/guide/en/elasticsearch/reference/current/heap-size_html
 ## for more information
 ##
 ################################################################
@@ -31,7 +31,7 @@
 ################################################################
 ##
 ## All settings below this section are considered
-## expert settings. Don't tamper with them unless
+## expert settings_ Don't tamper with them unless
 ## you understand what you are doing
 ##
 ################################################################
@@ -52,26 +52,26 @@
 -server
 
 # set to headless, just in case
--Djava.awt.headless=true
+-Djava_awt_headless=true
 
-# ensure UTF-8 encoding by default (e.g. filenames)
--Dfile.encoding=UTF-8
+# ensure UTF-8 encoding by default (e_g_ filenames)
+-Dfile_encoding=UTF-8
 
 # use our provided JNA always versus the system one
--Djna.nosys=true
+-Djna_nosys=true
 
 # use old-style file permissions on JDK9
--Djdk.io.permissionsUseCanonicalPath=true
+-Djdk_io_permissionsUseCanonicalPath=true
 
 # flags to configure Netty
--Dio.netty.noUnsafe=true
--Dio.netty.noKeySetOptimization=true
--Dio.netty.recycler.maxCapacityPerThread=0
+-Dio_netty_noUnsafe=true
+-Dio_netty_noKeySetOptimization=true
+-Dio_netty_recycler_maxCapacityPerThread=0
 
 # log4j 2
--Dlog4j.shutdownHookEnabled=false
--Dlog4j2.disable.jmx=true
--Dlog4j.skipJansi=true
+-Dlog4j_shutdownHookEnabled=false
+-Dlog4j2_disable_jmx=true
+-Dlog4j_skipJansi=true
 
 ## heap dumps
 
@@ -81,7 +81,7 @@
 
 # specify an alternative path for heap dumps
 # ensure the directory exists and has sufficient space
-#-XX:HeapDumpPath=${heap.dump.path}
+#-XX:HeapDumpPath=${heap_dump_path}
 
 ## GC logging
 
@@ -97,9 +97,9 @@
 #-Xloggc:${loggc}
 
 
-# By default, the GC log file will not rotate.
+# By default, the GC log file will not rotate_
 # By uncommenting the lines below, the GC log file
-# will be rotated every 128MB at most 32 times.
+# will be rotated every 128MB at most 32 times_
 #-XX:+UseGCLogFileRotation
 #-XX:NumberOfGCLogFiles=32
 #-XX:GCLogFileSize=128M

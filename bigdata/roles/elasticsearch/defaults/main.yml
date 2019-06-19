@@ -1,0 +1,12 @@
+---
+
+dev_dict:
+    - {disk: "/dev/vdb", dir: "/data1"}
+    - {disk: "/dev/vdc", dir: "/data2"}
+
+es_group: 'souche'
+es_user: 'souche'
+es_install_path: ""
+es_version: "7_1_1"
+es_pack_dir: ''
+es_install_link_path: ''

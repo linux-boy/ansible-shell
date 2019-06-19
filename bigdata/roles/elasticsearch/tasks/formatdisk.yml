@@ -1,0 +1,24 @@
+---
+  - name: format disk
+    filesystem:
+        dev: {{item.disk}}
+        fstype: ext4
+    with_dict:
+        "{{dev_dict}}"
+  - name: mkdir mount dir
+    file:
+        path: {{item.dir}}
+        mode: 755
+        state: directory
+    with_dict:
+        "{{dev_dict}}"
+
+  - name: mount disk
+    mount:
+        backup: yes
+        opts: rw,noatime,nodiratime
+        path: {{item.dir}}
+        src: {{item.disk}}
+        state: mounted
+    with_dict:
+        "{{dev_dict}}"

@@ -1,56 +1,70 @@
-{% if es_config %}
-{{ es_config | to_nice_yaml }}
+
+###cluster attribute#####
+{% if es_cluster_name %}
+cluster_name: {{es_cluster_name}}
+{%else%}
+cluster_name: elasticsearch
 {% endif %}
 
-{% if es_config['cluster.name'] is not defined %}
-cluster.name: elasticsearch
-{% endif %}
-
-{% if es_config['node.name'] is not defined %}
-node.name: {{inventory_hostname}}
+{% if es_node_name %}
+node_name: {{es_node_name}}
+{%else%}
+node_name: {{ansible_hostname}}
 {% endif %}
 
 #################################### Paths ####################################
+path_data: {{ es_path_data }}
 
-# Path to directory containing configuration (this file and logging.yml):
-
-{% if (es_version is version_compare('6.0.0', '<')) %}
-path.conf: {{ es_conf_dir }}
-{% endif %}
-
-path.data: {{ es_data_dirs | array_to_str }}
-
-path.logs: {{ es_log_dir }}
-
-{% if es_path_repo is defined %}
-path.repo: {{ es_path_repo }}
-{% endif %}
-
+path_logs: {{ es_log_dir }}
+######index attribute#####
 {% if es_action_auto_create_index == true %}
-action.auto_create_index: true
+action_auto_create_index: true
 {% elif not es_action_auto_create_index %}
-action.auto_create_index: false
+action_auto_create_index: false
 {% else %}
-action.auto_create_index: {{ es_action_auto_create_index }}
+action_auto_create_index: {{ es_action_auto_create_index }}
 {% endif %}
 
-{% if es_enable_xpack and es_api_basic_auth_username is defined and es_api_basic_auth_password is defined %}
-xpack.security.enabled: true
-{% endif %}
 
-{% if es_mail_config is defined %}
-xpack.notification.email:
-  account:
-    {{ es_mail_config['account'] }}:
-      profile: {{ es_mail_config['profile'] }}
-      email_defaults:
-        from: {{ es_mail_config['from'] }}
-      smtp:
-        auth: {{ es_mail_config['require_auth'] }}
-        host: {{ es_mail_config['host'] }}
-        port: {{ es_mail_config['port'] }}
-        {% if es_mail_config['require_auth'] == true %}
-        user: {{ es_mail_config['user'] }}
-        password: {{ es_mail_config['pass'] }}
-        {% endif %}
+######cluster configure#######
+
+network_host: {{ansible_default_ipv4.address}}
+transport.bind_host: {{ansible_default_ipv4.address}}
+
+{% if es_http_port %}
+http.port: {{es_http_port}}
+{% else %}
+http.port: 9200
+{% endif %}
+{% if es_transport_tcp_port %}
+transport.tcp.port: {{es_transport_tcp_port}}
+{% else %}
+transport.tcp.port: 9300
+{% endif %}
+{% if es_discovery_zen_ping_unicast_hosts %}
+discovery.zen.ping.unicast.hosts: {{es_discovery_zen_ping_unicast_hosts}}
+{% endif %}
+{% if es_node_master == 'false' %}
+node.master: {{es_node_master}}
+{% endif %}
+{% if es_node_data == 'false' %}
+node.data: {{es_node_data}}
+{% endif %}
+{% if es_node_data == 'false' %}
+node.ingest: {{es_node_data}}
+{% endif %}
+{% if es_http_cors_allow_origin == '*' %}
+http.cors.allow-origin: {{es_http_cors_allow_origin}}
+{% endif %}
+{% if es_http_cors_enabled == 'true' %}
+http.cors.enabled: {{es_http_cors_enabled}}
+{% endif %}
+{% if es_http_cors_enabled == 'false' %}
+xpack.security.enabled: {{es_xpack_security_enabled}}
+{% endif %}
+{% if es_thread_pool_search_queue_size == 'true' %}
+thread_pool.search.queue_size: {{es_thread_pool_search_queue_size}}
+{% endif %}
+{% if es_thread_pool_search_size == 'true' %}
+thread_pool.search.size: {{es_thread_pool_search_size}}
 {% endif %}
