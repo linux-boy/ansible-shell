@@ -2,30 +2,30 @@
 
   - name: mkdir esdata
     file:
-        path: {{item}}
+        path: '{{item}}'
         state: directory
-        group: {{es_group}}
-        owner: {{es_user}}
+        group: '{{es_group}}'
+        owner: '{{es_user}}'
     with_items:
-        {{es_path_data}}
+        '{{es_path_data}}'
   - name: mkdir eslogs
     file:
-        path: {{es_path_logs}}
+        path: '{{es_log_dir}}'
         state: directory
-        group: {{es_group}}
-        owner: {{es_user}}
+        group: '{{es_group}}'
+        owner: '{{es_user}}'
   - name: unarchive elastic
-    archive: 
+    unarchive: 
         copy: yes
         dest: {{es_install_path}}
         src: "{{es_pack_dir}}/elasticsearch-{{es_version}}.tar.gz"
-        group: {{es_group}}
-        owner: {{es_user}}
+        group: '{{es_group}}'
+        owner: '{{es_user}}'
   - name: link elasticsearch directory
     file:
-        path: "{{es_install_path}}/{{es_version}}"
-        dest: {{es_install_link_path}}
-        file: link
+        src: "{{es_install_path}}/elasticsearch-{{es_version}}"
+        dest: '{{es_install_link_path}}'
+        state: link
   - name: copy elasticsearch template file 
     template:
         src: elasticsearch.yml.j2
@@ -36,6 +36,6 @@
         dest: "{{es_install_link_path}}/config/jvm.options"
   - name: copy esstart template file
     template:
-        src: elaticstart.yml.j2
+        src: elasticstart.yml.j2
         dest: "{{es_install_link_path}}/bin/elastic.service"
         mode: a+x

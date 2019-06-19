@@ -103,8 +103,3 @@
 #-XX:+UseGCLogFileRotation
 #-XX:NumberOfGCLogFiles=32
 #-XX:GCLogFileSize=128M
-{% if es_jvm_custom_parameters !='' %}
-{% for item in es_jvm_custom_parameters %}
-{{ item }}
-{% endfor %}
-{% endif %}

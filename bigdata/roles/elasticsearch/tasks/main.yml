@@ -1,6 +1,5 @@
 ---
 
-- include:
-  - formatdisk.yml
-  - elasticsearch_install.yml 
+- include: formatdisk.yml
+- include: elasticsearch_install.yml 
   
