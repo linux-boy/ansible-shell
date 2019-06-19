@@ -5,19 +5,20 @@
 ################################################################
 ##
 ## You should always set the min and max JVM heap
-## size to the same value_ For example, to set
+## size to the same value. For example, to set
 ## the heap to 4 GB, set:
 ##
 ## -Xms4g
 ## -Xmx4g
 ##
-## See https://www_elastic_co/guide/en/elasticsearch/reference/current/heap-size_html
+## See https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
 ## for more information
 ##
 ################################################################
 
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
+
 {% if es_heap_size is defined %}
 -Xms{{ es_heap_size }}
 -Xmx{{ es_heap_size }}
@@ -31,7 +32,7 @@
 ################################################################
 ##
 ## All settings below this section are considered
-## expert settings_ Don't tamper with them unless
+## expert settings. Don't tamper with them unless
 ## you understand what you are doing
 ##
 ################################################################
@@ -40,6 +41,9 @@
 -XX:+UseConcMarkSweepGC
 -XX:CMSInitiatingOccupancyFraction=75
 -XX:+UseCMSInitiatingOccupancyOnly
+#-XX:+UseG1GC 
+#-XX:ParallelGCThreads=2  
+#-XX:ConcGCThreads=2
 
 ## optimizations
 
@@ -48,30 +52,33 @@
 
 ## basic
 
-# force the server VM
+# force the server VM (remove on 32-bit client JVMs)
 -server
 
-# set to headless, just in case
--Djava_awt_headless=true
+# explicitly set the stack size (reduce to 320k on 32-bit client JVMs)
+-Xss1m
 
-# ensure UTF-8 encoding by default (e_g_ filenames)
--Dfile_encoding=UTF-8
+# set to headless, just in case
+-Djava.awt.headless=true
+
+# ensure UTF-8 encoding by default (e.g. filenames)
+-Dfile.encoding=UTF-8
 
 # use our provided JNA always versus the system one
--Djna_nosys=true
+-Djna.nosys=true
 
 # use old-style file permissions on JDK9
--Djdk_io_permissionsUseCanonicalPath=true
+-Djdk.io.permissionsUseCanonicalPath=true
 
 # flags to configure Netty
--Dio_netty_noUnsafe=true
--Dio_netty_noKeySetOptimization=true
--Dio_netty_recycler_maxCapacityPerThread=0
+-Dio.netty.noUnsafe=true
+-Dio.netty.noKeySetOptimization=true
+-Dio.netty.recycler.maxCapacityPerThread=0
 
 # log4j 2
--Dlog4j_shutdownHookEnabled=false
--Dlog4j2_disable_jmx=true
--Dlog4j_skipJansi=true
+-Dlog4j.shutdownHookEnabled=false
+-Dlog4j2.disable.jmx=true
+-Dlog4j.skipJansi=true
 
 ## heap dumps
 
@@ -81,25 +88,32 @@
 
 # specify an alternative path for heap dumps
 # ensure the directory exists and has sufficient space
-#-XX:HeapDumpPath=${heap_dump_path}
+#-XX:HeapDumpPath=${heap.dump.path}
 
 ## GC logging
 
-#-XX:+PrintGCDetails
-#-XX:+PrintGCTimeStamps
-#-XX:+PrintGCDateStamps
-#-XX:+PrintClassHistogram
-#-XX:+PrintTenuringDistribution
+-XX:+PrintGCDetails
+-XX:+PrintGCTimeStamps
+-XX:+PrintGCDateStamps
+-XX:+PrintClassHistogram
+-XX:+PrintTenuringDistribution
 #-XX:+PrintGCApplicationStoppedTime
 
 # log GC status to a file with time stamps
 # ensure the directory exists
-#-Xloggc:${loggc}
+-Xloggc:{{es_log_dir}}/gc.log
 
-
-# By default, the GC log file will not rotate_
+# By default, the GC log file will not rotate.
 # By uncommenting the lines below, the GC log file
-# will be rotated every 128MB at most 32 times_
-#-XX:+UseGCLogFileRotation
-#-XX:NumberOfGCLogFiles=32
-#-XX:GCLogFileSize=128M
+# will be rotated every 128MB at most 32 times.
+-XX:+UseGCLogFileRotation
+-XX:NumberOfGCLogFiles=8
+-XX:GCLogFileSize=128M
+
+# Elasticsearch 5.0.0 will throw an exception on unquoted field names in JSON.
+# If documents were already indexed with unquoted fields in a previous version
+# of Elasticsearch, some operations may throw errors.
+#
+# WARNING: This option will be removed in Elasticsearch 6.0.0 and is provided
+# only for migration purposes.
+#-Delasticsearch.json.allow_unquoted_field_names=true

@@ -8,7 +8,7 @@
   - name: mkdir mount dir
     file:
         path: '{{item.dir}}'
-        mode: 755
+        mode: 0755
         state: directory
     with_items:
         "{{dev_dict}}"

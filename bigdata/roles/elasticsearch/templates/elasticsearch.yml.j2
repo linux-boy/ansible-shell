@@ -1,34 +1,31 @@
 
 ###cluster attribute#####
 {% if es_cluster_name %}
-cluster_name: {{es_cluster_name}}
+cluster.name: {{es_cluster_name}}
 {%else%}
-cluster_name: elasticsearch
+cluster.name: elasticsearch
 {% endif %}
 
 {% if es_node_name %}
-node_name: {{es_node_name}}
+node.name: {{es_node_name}}
 {%else%}
-node_name: {{ansible_hostname}}
+node.name: {{ansible_hostname}}
 {% endif %}
 
 #################################### Paths ####################################
-path_data: {{ es_path_data }}
+path.data: {{ es_path_data }}
 
-path_logs: {{ es_log_dir }}
+path.logs: {{ es_log_dir }}
 ######index attribute#####
 {% if es_action_auto_create_index == true %}
-action_auto_create_index: true
-{% elif not es_action_auto_create_index %}
-action_auto_create_index: false
-{% else %}
-action_auto_create_index: {{ es_action_auto_create_index }}
+action.auto.create.index: true
+
 {% endif %}
 
 
 ######cluster configure#######
 
-network_host: {{ansible_default_ipv4.address}}
+network.host: {{ansible_default_ipv4.address}}
 transport.bind_host: {{ansible_default_ipv4.address}}
 
 {% if es_http_port %}
