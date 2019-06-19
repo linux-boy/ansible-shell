@@ -1,3 +1,0 @@
----
-- include_tasks: formatdisk.yml
-- include_tasks: elasticsearch_install.yml
