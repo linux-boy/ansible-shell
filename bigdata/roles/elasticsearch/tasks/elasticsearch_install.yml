@@ -17,7 +17,7 @@
   - name: unarchive elastic
     unarchive: 
         copy: yes
-        dest: {{es_install_path}}
+        dest: '{{es_install_path}}'
         src: "{{es_pack_dir}}/elasticsearch-{{es_version}}.tar.gz"
         group: '{{es_group}}'
         owner: '{{es_user}}'

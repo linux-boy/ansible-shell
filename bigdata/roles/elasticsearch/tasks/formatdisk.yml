@@ -20,5 +20,6 @@
         path: '{{item.dir}}'
         src: '{{item.disk}}'
         state: mounted
+        fstype: ext4
     with_items:
         "{{dev_dict}}"
