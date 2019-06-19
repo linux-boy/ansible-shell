@@ -30,12 +30,18 @@
     template:
         src: elasticsearch.yml.j2
         dest: "{{es_install_link_path}}/config/elasticsearch.yml"
+        group: '{{es_group}}'
+        owner: '{{es_user}}'
   - name: copy esjvm template file 
     template:
         src: jvm.options.j2
         dest: "{{es_install_link_path}}/config/jvm.options"
+        group: '{{es_group}}'
+        owner: '{{es_user}}'
   - name: copy esstart template file
     template:
         src: elasticstart.yml.j2
         dest: "{{es_install_link_path}}/bin/elastic.service"
+        group: '{{es_group}}'
+        owner: '{{es_user}}'
         mode: a+x
