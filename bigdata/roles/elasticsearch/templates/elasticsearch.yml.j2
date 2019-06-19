@@ -18,7 +18,7 @@ path.data: {{ es_path_data }}
 path.logs: {{ es_log_dir }}
 ######index attribute#####
 {% if es_action_auto_create_index == true %}
-action.auto.create.index: true
+action.auto_create_index: true
 
 {% endif %}
 
@@ -50,18 +50,18 @@ node.data: {{es_node_data}}
 {% if es_node_data == 'false' %}
 node.ingest: {{es_node_data}}
 {% endif %}
-{% if es_http_cors_allow_origin == '*' %}
+{% if es_http_cors_allow_origin %}
 http.cors.allow-origin: {{es_http_cors_allow_origin}}
 {% endif %}
-{% if es_http_cors_enabled == 'true' %}
+{% if es_http_cors_enabled %}
 http.cors.enabled: {{es_http_cors_enabled}}
 {% endif %}
-{% if es_http_cors_enabled == 'false' %}
+{% if es_http_cors_enabled  %}
 xpack.security.enabled: {{es_xpack_security_enabled}}
 {% endif %}
-{% if es_thread_pool_search_queue_size == 'true' %}
+{% if es_thread_pool_search_queue_size  %}
 thread_pool.search.queue_size: {{es_thread_pool_search_queue_size}}
 {% endif %}
-{% if es_thread_pool_search_size == 'true' %}
+{% if es_thread_pool_search_size %}
 thread_pool.search.size: {{es_thread_pool_search_size}}
 {% endif %}

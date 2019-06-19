@@ -3,9 +3,8 @@
 es_cluster_name: ''
 es_node_name:
 es_path_data: 
-    - "/data/esdata"
-    - "/data1/esdata"
-    - "/data/esdata/logs"
+    - "/data/esdata/data/"
+    - "/data1/esdata/data/"
 es_log_dir: "/data/esdata/logs"
 es_http_port:
 es_transport_tcp_port: 
