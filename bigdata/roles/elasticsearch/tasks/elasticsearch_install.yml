@@ -45,3 +45,9 @@
         group: '{{es_group}}'
         owner: '{{es_user}}'
         mode: a+x
+  - name: add sysctl
+    sysctl:
+      name: vm.max_map_count
+      value: 262145
+      state: present
+      reload: yes
